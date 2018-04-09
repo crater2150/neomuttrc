@@ -1,0 +1,104 @@
+source $XDG_CONFIG_HOME/mutt/chroma.theme 
+
+set alias_file=$XDG_CONFIG_HOME/mutt/aliases
+
+set folder=~/.maildir/uber
+set spoolfile=+INBOX
+
+folder-hook . set record="^"
+folder-hook . set postponed=~/.maildir/uber/Drafts
+
+#auto from for folders
+folder-hook . set from="alexander.gehrke@qwertyuiop.de"
+folder-hook institute set from="alexander.gehrke@uni-wuerzburg.de"
+folder-hook uni set from="alexander.gehrke@stud-mail.uni-wuerzburg.de"
+
+mailboxes `find ~/.maildir/ -type d -name cur -printf '%h '`
+
+set index_format="%4C %Z %?M?(>%3M)&      ? %{%b %d} %-15.15F (%4c) %s"
+#set sidebar_visible
+#set sidebar_width=30
+
+set sendmail="/usr/bin/msmtp"
+set use_from=yes
+set realname="Alexander Gehrke"
+set envelope_from=yes
+
+set wait_key=no
+set new_mail_command="newmails -p &"
+set timeout=10
+
+ignore *
+unignore from date subject to cc
+unignore organization organisation x-mailer: x-newsreader: x-mailing-list:
+unignore posted-to:
+
+
+set mbox_type=Maildir
+
+set sort=threads
+
+set edit_headers
+
+alternative_order text/enriched text/plain 
+auto_view text/html
+auto_view text/calendar
+
+#GPG
+message-hook '!(~g|~G) ~b"^-----BEGIN\ PGP\ (SIGNED\ )?MESSAGE"' "exec check-traditional-pgp"
+
+source $XDG_CONFIG_HOME/mutt/gpg.muttrc
+
+#Change this to your key id
+set pgp_sign_as=74F066E0
+set pgp_use_gpg_agent=yes
+set pgp_autosign=yes
+set pgp_autoencrypt=yes
+set pgp_replyencrypt=yes
+set pgp_timeout=1800
+set pgp_good_sign="^gpg: Good signature from"
+set pgp_encrypt_self = yes
+
+# khard integration
+set query_command= "khard email -p %s"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+macro index,pager A \
+    "<pipe-message>khard add-email<return>" \
+    "add the sender email address to khard"
+
+
+#keys and macros, more vim-like than default
+bind index zz collapse-thread
+bind index g noop
+bind index gg first-entry
+bind index G  last-entry
+
+# map different reply methods
+bind index,pager r noop
+bind index,pager rr reply
+bind index,pager rg group-reply
+bind index,pager rl list-reply
+
+# navigation with j/k/J/K
+bind index <Space> collapse-thread
+bind pager J next-undeleted
+bind pager K previous-undeleted
+bind pager j next-line
+bind pager k previous-line
+
+# new mail with sender of current mail as recipient
+bind index,pager @ compose-to-sender
+
+macro pager \cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+macro pager \cu <pipe-entry>'urler'<enter> 'Follow links with urlview'
+macro attach 'V' "<pipe-entry>htmlmailview<enter>"
+macro index M "<tag-pattern>~N|~O\r<tag-prefix><clear-flag>N<untag-pattern>.*\r" "Mark all messages in this mailbox as read"
+macro index i "c=INBOX<enter>" "go to inbox"
+macro index $ '\
+<enter-command>set my_delete=$delete<enter>\
+<enter-command>set delete=yes<enter>\
+<sync-mailbox>\
+<enter-command>set delete=$my_delete<enter>\
+<shell-escape>awidget -u mail<enter>\
+' "save changes to mailbox and update awesome widgets"
