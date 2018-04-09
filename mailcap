@@ -1,0 +1,8 @@
+#text/html; firefox %s &; test=test -n "$DISPLAY"; needsterminal;
+#text/html; htmlmailview %s &; test=test -n "$DISPLAY"; needsterminal; copiousoutput;
+#text/html; elinks -dump %s; test=test -z "$DISPLAY"; nametemplate=%s.html; copiousoutput;
+text/html; elinks -dump %s; nametemplate=%s.html; copiousoutput;
+text/calendar; /usr/local/bin/vcalendar-filter; copiousoutput
+application/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; xdg-open /tmp/mutt/$(basename %s) &
+image/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; xdg-open /tmp/mutt/$(basename %s) &
+video/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; mpv /tmp/mutt/$(basename %s) &
