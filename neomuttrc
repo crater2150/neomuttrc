@@ -13,6 +13,9 @@ folder-hook . set from="alexander.gehrke@qwertyuiop.de"
 folder-hook institute set from="alexander.gehrke@uni-wuerzburg.de"
 folder-hook uni set from="alexander.gehrke@stud-mail.uni-wuerzburg.de"
 
+folder-hook . set signature=
+folder-hook institute set signature=$XDG_CONFIG_HOME/mutt/institute.signature
+
 mailboxes `find ~/.maildir/ -type d -name cur -printf '%h '`
 
 set index_format="%4C %Z %?M?(>%3M)&      ? %{%b %d} %-15.15F (%4c) %s"
