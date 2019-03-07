@@ -18,7 +18,7 @@ folder-hook institute set signature=$XDG_CONFIG_HOME/mutt/institute.signature
 
 mailboxes `find ~/.maildir/ -type d -name cur -printf '%h '`
 
-set index_format="%4C %Z %?M?(>%3M)&      ? %{%b %d} %-15.15F (%4c) %s"
+#set index_format="%4C %Z %?M?(>%3M)&      ? %{%b %d} %-15.15F (%4c) %s"
 #set sidebar_visible
 #set sidebar_width=30
 
@@ -97,7 +97,7 @@ macro pager \cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 macro pager \cu <pipe-entry>'urler'<enter> 'Follow links with urlview'
 macro attach 'V' "<pipe-entry>htmlmailview<enter>"
 macro index M "<tag-pattern>~N|~O\r<tag-prefix><clear-flag>N<untag-pattern>.*\r" "Mark all messages in this mailbox as read"
-macro index i "c=INBOX<enter>" "go to inbox"
+macro index I "c=INBOX<enter>" "go to inbox"
 macro index $ '\
 <enter-command>set my_delete=$delete<enter>\
 <enter-command>set delete=yes<enter>\
@@ -105,3 +105,25 @@ macro index $ '\
 <enter-command>set delete=$my_delete<enter>\
 <shell-escape>awidget -u mail<enter>\
 ' "save changes to mailbox and update awesome widgets"
+
+
+# notmuch
+set nm_db_limit = 0
+set nm_default_uri = "notmuch:///home/crater2150/.maildir/uber"
+set nm_record = yes
+set nm_record_tags = "-inbox,archive,me"
+set nm_unread_tag = unread
+set vfolder_format = "%6n(%6N) %f"
+
+virtual-mailboxes "My INBOX" "notmuch://?query=tag:inbox"
+bind index,pager X change-vfolder
+bind index,pager \eX vfolder-from-query
+bind index,pager + entire-thread
+
+tag-transforms "attachment" "@" \
+               "encrypted"  "" \
+               "signed"     "✎"
+
+tag-formats "attachment" "GA" \
+            "encrypted"  "GE" \
+            "signed"     "GS"
