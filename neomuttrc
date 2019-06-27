@@ -31,6 +31,9 @@ set wait_key=no
 set new_mail_command="newmails -p &"
 set timeout=10
 
+set markers=no
+set wrap=0
+
 ignore *
 unignore from date subject to cc
 unignore organization organisation x-mailer: x-newsreader: x-mailing-list:
@@ -44,8 +47,10 @@ set sort=threads
 set edit_headers
 
 alternative_order text/enriched text/plain 
+auto_view text/plain
 auto_view text/html
 auto_view text/calendar
+set allow_ansi=yes
 
 #GPG
 message-hook '!(~g|~G) ~b"^-----BEGIN\ PGP\ (SIGNED\ )?MESSAGE"' "exec check-traditional-pgp"
