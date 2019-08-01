@@ -30,6 +30,7 @@ set envelope_from=yes
 set wait_key=no
 set new_mail_command="newmails -p &"
 set timeout=10
+unset mark_old
 
 set markers=no
 set wrap=0
@@ -94,6 +95,14 @@ bind pager J next-undeleted
 bind pager K previous-undeleted
 bind pager j next-line
 bind pager k previous-line
+
+bind index,pager L noop
+macro index,pager LU <limit>~(~U)<enter>
+macro index,pager LL <limit>all<enter>
+
+set sidebar_next_new_wrap
+bind index,pager <esc>n noop
+macro index,pager <esc>n <sidebar-toggle-visible><sidebar-next-new><sidebar-open><sidebar-toggle-visible>
 
 # new mail with sender of current mail as recipient
 bind index,pager @ compose-to-sender
