@@ -16,7 +16,7 @@ folder-hook uni set from="alexander.gehrke@stud-mail.uni-wuerzburg.de"
 folder-hook . set signature=
 folder-hook institute set signature=$XDG_CONFIG_HOME/mutt/institute.signature
 
-mailboxes `find ~/.maildir/ -type d -name cur -printf '%h '`
+mailboxes `mailboxes`
 
 #set index_format="%4C %Z %?M?(>%3M)&      ? %{%b %d} %-15.15F (%4c) %s"
 #set sidebar_visible
@@ -35,11 +35,15 @@ unset mark_old
 set markers=no
 set wrap=0
 
+set simple_search="~L %s | ~s %s"
+
 ignore *
 unignore from date subject to cc
 unignore organization organisation x-mailer: x-newsreader: x-mailing-list:
 unignore posted-to:
 
+set abort_noattach = ask-yes
+set abort_noattach_regex = "\\<(anhängen|angehängt|anhang|anhänge|hängt an|anbei)\\>"
 
 set mbox_type=Maildir
 
@@ -48,10 +52,13 @@ set sort=threads
 set edit_headers
 
 alternative_order text/enriched text/plain 
-auto_view text/plain
-auto_view text/html
-auto_view text/calendar
+auto_view text/plain text/html text/calendar
 set allow_ansi=yes
+set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_nocolor
+folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_nocolor
+folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
+
+
 
 #GPG
 message-hook '!(~g|~G) ~b"^-----BEGIN\ PGP\ (SIGNED\ )?MESSAGE"' "exec check-traditional-pgp"
@@ -100,6 +107,7 @@ bind index,pager L noop
 macro index,pager LU <limit>~(~U)<enter>
 macro index,pager LL <limit>all<enter>
 
+# make alt-n go to next new mail
 set sidebar_next_new_wrap
 bind index,pager <esc>n noop
 macro index,pager <esc>n <sidebar-toggle-visible><sidebar-next-new><sidebar-open><sidebar-toggle-visible>
