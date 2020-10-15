@@ -54,9 +54,9 @@ set edit_headers
 alternative_order text/enriched text/plain 
 auto_view text/plain text/html text/calendar
 set allow_ansi=yes
-set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_nocolor
-folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_nocolor
-folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
+set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
+folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
+folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_color
 
 
 
@@ -75,6 +75,7 @@ set pgp_timeout=1800
 set pgp_good_sign="^gpg: Good signature from"
 set pgp_encrypt_self = yes
 
+set abort_key = "<Esc>"
 # khard integration
 set query_command= "khard email -p %s"
 bind editor <Tab> complete-query
