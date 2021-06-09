@@ -1,0 +1,3 @@
+set sleep_time=0
+push <limit>~(~U|~F)<enter>
+set sleep_time=1

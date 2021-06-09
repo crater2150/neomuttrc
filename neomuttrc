@@ -16,9 +16,15 @@ folder-hook uni set from="alexander.gehrke@stud-mail.uni-wuerzburg.de"
 folder-hook . set signature=
 folder-hook institute set signature=$XDG_CONFIG_HOME/mutt/institute.signature
 
-mailboxes `mailboxes`
+folder-hook . "source $XDG_CONFIG_HOME/mutt/macros/unread.rc"
 
-#set index_format="%4C %Z %?M?(>%3M)&      ? %{%b %d} %-15.15F (%4c) %s"
+mailboxes `$XDG_CONFIG_HOME/mutt/mailboxes`
+
+set index_format="%Z %10@date@ %-15.15F (%4cr) %?M?[>%3M]? %s"
+index-format-hook  date  "~d<1d"    "%[%H:%M]"
+index-format-hook  date  "~d<7d"    "%[%a %H:%M]"
+index-format-hook  date  "~d<1y"    "%[%b %d]"
+index-format-hook  date  "~A"       "%[%F]"
 #set sidebar_visible
 #set sidebar_width=30
 
@@ -28,7 +34,7 @@ set realname="Alexander Gehrke"
 set envelope_from=yes
 
 set wait_key=no
-set new_mail_command="newmails -p &"
+#set new_mail_command="newmails -p &"
 set timeout=10
 unset mark_old
 
@@ -43,7 +49,7 @@ unignore organization organisation x-mailer: x-newsreader: x-mailing-list:
 unignore posted-to:
 
 set abort_noattach = ask-yes
-set abort_noattach_regex = "\\<(anhängen|angehängt|anhang|anhänge|hängt an|anbei)\\>"
+set abort_noattach_regex = "\\<(anhängen|angehängt(|e|er|es|en)|anhang|anhänge|hängt an|anbei)\\>"
 
 set mbox_type=Maildir
 
@@ -54,9 +60,9 @@ set edit_headers
 alternative_order text/enriched text/plain 
 auto_view text/plain text/html text/calendar
 set allow_ansi=yes
-set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
-folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
-folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_color
+set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_color
+#folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
+#folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_color
 
 
 
@@ -105,7 +111,7 @@ bind pager j next-line
 bind pager k previous-line
 
 bind index,pager L noop
-macro index,pager LU <limit>~(~U)<enter>
+macro index,pager LU <limit>~(~U|~F)<enter>
 macro index,pager LL <limit>all<enter>
 
 # make alt-n go to next new mail
@@ -118,7 +124,7 @@ bind index,pager @ compose-to-sender
 
 macro pager \cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
 macro pager \cu <pipe-entry>'urler'<enter> 'Follow links with urlview'
-macro attach 'V' "<pipe-entry>htmlmailview<enter>"
+macro pager,attach 'V' "<pipe-entry>htmlmailview<enter>"
 macro index M "<tag-pattern>~N|~O\r<tag-prefix><clear-flag>N<untag-pattern>.*\r" "Mark all messages in this mailbox as read"
 macro index I "c=INBOX<enter>" "go to inbox"
 macro index $ '\
@@ -129,6 +135,7 @@ macro index $ '\
 <shell-escape>awidget -u mail<enter>\
 ' "save changes to mailbox and update awesome widgets"
 
+macro index,pager C ":source $XDG_CONFIG_HOME/mutt/mailboxes-fzf|<enter>"
 
 # notmuch
 set nm_db_limit = 0
@@ -149,4 +156,4 @@ tag-transforms "attachment" "@" \
 
 tag-formats "attachment" "GA" \
             "encrypted"  "GE" \
-            "signed"     "GS"
+            C     "GS"

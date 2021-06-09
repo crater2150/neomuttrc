@@ -50,3 +50,12 @@ color quoted5 color221 default
 color quoted6 color113 default
 color quoted7 color221 default
 color quoted8 color113 default
+
+color index_author color111 default '.*'
+color index_author color251 default '~f"Alexander Gehrke"'
+color index_flags color221 default '.*'
+color index_flags color203 default '~D'
+color index_date color113 default
+color index_size color244 default
+
+# vim: syntax=neomuttrc

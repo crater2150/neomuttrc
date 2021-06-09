@@ -1,0 +1,4 @@
+#!/bin/zsh
+folder=$(fd -t d --exec printf '%s\n' '{//}' \; cur ~/.maildir/ | fzf)
+echo "push 'c$folder<enter>'"
+
