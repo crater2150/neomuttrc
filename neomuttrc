@@ -157,3 +157,5 @@ tag-transforms "attachment" "@" \
 tag-formats "attachment" "GA" \
             "encrypted"  "GE" \
             C     "GS"
+
+set display_filter="$XDG_CONFIG_HOME/mutt/format_date.py"
