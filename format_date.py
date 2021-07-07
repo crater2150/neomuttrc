@@ -3,14 +3,17 @@ import sys
 import re
 # import subprocess
 from email.utils import format_datetime, parsedate_to_datetime
+from charset_normalizer import CharsetNormalizerMatches as CnM
 
 in_headers = True
-for line in sys.stdin.readlines():
+data = sys.stdin.buffer.read()
+detected = CnM.from_bytes(data, preemptive_behaviour=False).best().first()
+for line in str(detected).splitlines():
     if line == "\n": in_headers = False
     match = re.match(r'^Date: (.+)', line)
 
     if not in_headers or not match:
-        print(line, end="")
+        print(line)
         continue
 
     date_string = match.group(1)
