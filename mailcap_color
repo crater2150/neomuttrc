@@ -5,7 +5,8 @@ text/html; /usr/bin/elinks -dump -dump-color-mode 3 %s; nametemplate=%s.html; co
 text/plain; mdcat %s; copiousoutput;
 text/calendar; khal printics %s; copiousoutput
 application/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; xdg-open /tmp/mutt/$(basename %s) &
-image/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; xdg-open /tmp/mutt/$(basename %s) &
+#image/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; xdg-open /tmp/mutt/$(basename %s) &
+image/*; kitty +kitten icat %s; copiousoutput
 video/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; mpv /tmp/mutt/$(basename %s) &
 application/ics; mutt-ical.py -i %s
 
