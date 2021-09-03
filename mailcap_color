@@ -2,7 +2,7 @@
 #text/html; htmlmailview %s &; test=test -n "$DISPLAY"; needsterminal; copiousoutput;
 #text/html; elinks -dump %s; test=test -z "$DISPLAY"; nametemplate=%s.html; copiousoutput;
 text/html; /usr/bin/elinks -dump -dump-color-mode 3 %s; nametemplate=%s.html; copiousoutput;
-text/plain; mdcat %s; copiousoutput;
+text/plain; mdcatw %s %{charset}; copiousoutput;
 text/calendar; khal printics %s; copiousoutput
 application/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; xdg-open /tmp/mutt/$(basename %s) &
 #image/*; mkdir -p /tmp/mutt \; cp %s /tmp/mutt \; xdg-open /tmp/mutt/$(basename %s) &

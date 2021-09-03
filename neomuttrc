@@ -2,7 +2,8 @@ source $XDG_CONFIG_HOME/mutt/chroma.theme
 
 set alias_file=$XDG_CONFIG_HOME/mutt/aliases
 
-set folder=~/.maildir/uber
+#set folder=~/.maildir/uber
+set folder=~/.maildir
 set spoolfile=+INBOX
 
 folder-hook . set record="^"
@@ -18,7 +19,7 @@ folder-hook institute set signature=$XDG_CONFIG_HOME/mutt/institute.signature
 
 folder-hook . "source $XDG_CONFIG_HOME/mutt/macros/unread.rc"
 
-mailboxes `mailboxes`
+mailboxes `$XDG_CONFIG_HOME/mutt/mailboxes`
 
 set index_format="%Z %10@date@ %-15.15F (%4cr) %?M?[>%3M]? %s"
 index-format-hook  date  "~d<1d"    "%[%H:%M]"
@@ -60,15 +61,9 @@ set edit_headers
 alternative_order text/enriched text/plain 
 auto_view text/plain text/html text/calendar
 set allow_ansi=yes
-<<<<<<< HEAD
 set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_color
-#folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
-#folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_color
-=======
-set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
-folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_nocolor
-folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
->>>>>>> 115b191 (More colorful pager)
+#folder-hook . set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap_nocolor
+#folder-hook github/Scala  set mailcap_path=$XDG_CONFIG_HOME/mutt/mailcap
 
 
 
