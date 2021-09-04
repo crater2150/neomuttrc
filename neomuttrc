@@ -158,8 +158,5 @@ tag-transforms "attachment" "@" \
 tag-formats "attachment" "GA" \
             "encrypted"  "GE" \
             C     "GS"
-<<<<<<< HEAD
 
 set display_filter="$XDG_CONFIG_HOME/mutt/format_date.py"
-=======
->>>>>>> 115b191 (More colorful pager)
